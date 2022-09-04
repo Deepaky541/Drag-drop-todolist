@@ -1,22 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+
+import DragNDrop from "./components/DragNDrop";
+
+const defaultData = [
+  { title: "Not Started", items: ["workout", "diet"] },
+  { title: "In Development", items: ["classes", "interviews"] },
+  { title: "Completed", items: ["masai school"] },
+];
 
 function App() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (localStorage.getItem("List")) {
+      setData(JSON.parse(localStorage.getItem("List")));
+    } else {
+      localStorage.setItem("List", JSON.stringify(defaultData));
+      setData(defaultData);
+    }
+  }, [setData]);
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <DragNDrop data={data} />
       </header>
     </div>
   );
