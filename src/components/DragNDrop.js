@@ -49,7 +49,7 @@ function DragNDrop({ data }) {
         return newList;
       });
       if (targetItem.grpI == 2 && dstart!==2 ) {
-        prompt("add comment");
+       var val=prompt("add comment");
       }
     }
      
