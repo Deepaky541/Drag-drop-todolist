@@ -48,7 +48,7 @@ function DragNDrop({ data }) {
         localStorage.setItem("List", JSON.stringify(newList));
         return newList;
       });
-      if (targetItem.grpI == 2 && dstart!==2 ) {
+      if (targetItem.grpI == 2 && dstart!=2 ) {
        var val=prompt("add comment");
       }
     }
