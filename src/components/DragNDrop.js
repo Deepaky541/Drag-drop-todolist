@@ -76,21 +76,21 @@ console.log(input,check);
   const handleAdd=()=>{
        if (check == "Not Started") {
          setList((oldList) => {
-           let newList = JSON.parse(JSON.stringify(oldList));
+           let newList = JSON.parse(localStorage.getItem("List"));
            newList[0].items.push(input);
            localStorage.setItem("List", JSON.stringify(newList));
            return newList;
          });
        } else if (check == "In Development") {
          setList((oldList) => {
-           let newList = JSON.parse(JSON.stringify(oldList));
+           let newList = JSON.parse(localStorage.getItem("List"));
            newList[1].items.push(input);
            localStorage.setItem("List", JSON.stringify(newList));
            return newList;
          });
        } else if (check == "Completed") {
          setList((oldList) => {
-           let newList = JSON.parse(JSON.stringify(oldList));
+           let newList = JSON.parse(localStorage.getItem("List"));
            newList[2].items.push(input);
            localStorage.setItem("List", JSON.stringify(newList));
            return newList;
