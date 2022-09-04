@@ -15,27 +15,25 @@ function DragNDrop({ data }) {
 
   const dragItem = useRef();
   const dragItemNode = useRef();
+  const [dstart, setdstart] = useState({})
 
   const handletDragStart = (e, item) => {
-  
+    setdstart(item);
     console.log("Starting to drag", item);
-
     dragItemNode.current = e.target;
     dragItemNode.current.addEventListener("dragend", handleDragEnd);
     dragItem.current = item;
-
-    setTimeout(() => {
-      setDragging(true);
-    }, 0);
+        setDragging(true);
   };
   
-  const handleDragEnter = (e, targetItem) => {
+  const handleDragEnter = (e, targetItem,flag) => {
+      console.log("flag",flag);
       
     console.log("Entering a drag target", targetItem);
   
     if (dragItemNode.current !== e.target) {
          
-      console.log("Target is NOT the same as dragged item");
+      
       setList((oldList) => {
         let newList = JSON.parse(JSON.stringify(oldList));
         newList[targetItem.grpI].items.splice(
@@ -50,7 +48,7 @@ function DragNDrop({ data }) {
         localStorage.setItem("List", JSON.stringify(newList));
         return newList;
       });
-      if (targetItem.grpI == 2) {
+      if (targetItem.grpI == 2 && dstart!==2 ) {
         prompt("add comment");
       }
     }
@@ -166,7 +164,7 @@ console.log(input,check);
           <div
             key={grp.title}
             onDragEnter={
-              dragging ? (e) => handleDragEnter(e, { grpI, itemI: 0 }) : null
+              dragging ? (e) => {let flag=1;handleDragEnter(e, { grpI, itemI: 0 },flag)} : null
             }
             className="dnd-group"
           >
@@ -200,16 +198,9 @@ console.log(input,check);
 
             {grp.items.map((item, itemI) => (
               <div
-                draggable="true"
+                draggable
                 key={item}
                 onDragStart={(e) => handletDragStart(e, { grpI, itemI })}
-                onDragEnter={
-                  dragging && !grp.items.length
-                    ? (e) => {
-                        handleDragEnter(e, { grpI, itemI });
-                      }
-                    : ""
-                }
                 className={dragging ? getStyles({ grpI, itemI }) : "dnd-item"}
               >
                 {item}
